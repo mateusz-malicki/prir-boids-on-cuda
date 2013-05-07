@@ -1,0 +1,56 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{dokument-wersje}
+
+\RequirePackage{xparse}
+
+\RequirePackage{longtable}
+\setlength{\LTpre}{0.5\baselineskip}
+\setlength{\LTpost}{1.0\baselineskip}
+
+\RequirePackage{booktabs}
+
+\RequirePackage{colortbl}
+
+\RequirePackage{xcolor}
+\definecolor{black}{gray}{0.0}
+\definecolor{light-gray}{gray}{0.8}
+
+\NewDocumentEnvironment {versions} { } {%
+\section*{Historia dokumentu}
+\begin{longtable}{@{} p{0.15\textwidth} @{\hspace{0.033\textwidth}} p{0.1\textwidth} @{\hspace{0.033\textwidth}} p{0.15\textwidth} @{\hspace{0.033\textwidth}} p{0.5\textwidth} @{}}
+    \arrayrulecolor{black}\toprule[1pt]
+    \textbf{Data} & \textbf{Wersja} & \textbf{Autor} & \textbf{Szczegóły} \tabularnewline
+    \arrayrulecolor{black}\toprule[1pt]
+    \endfirsthead
+
+    \arrayrulecolor{black}\toprule[1pt]
+    \textbf{Data} & \textbf{Wersja} & \textbf{Autor} & \textbf{Szczegóły} \tabularnewline
+    \arrayrulecolor{black}\toprule[1pt]
+    \endhead
+
+    %\arrayrulecolor{black}\midrule[0.5pt]
+    %\multicolumn{4}{@{} r @{}}{Kontynuacja na następnej stronie.} \tabularnewline
+    %\arrayrulecolor{black}\midrule[0.5pt]
+    \endfoot
+
+    \endlastfoot
+}{%
+    \end{NoHyper}
+    \end{minipage}
+    \tabularnewline
+    \arrayrulecolor{light-gray}\bottomrule[0.5pt]
+\end{longtable}
+}
+
+\NewDocumentCommand {\version} { s m m m } {%
+    \IfBooleanTF #1 {%
+    }{%
+        \end{NoHyper}
+        \end{minipage}
+        \tabularnewline
+        \arrayrulecolor{light-gray}\midrule[0.5pt]
+    }%
+    {#3} & {#2} & {#4} &
+    \begin{minipage}[t]{0.5\textwidth}
+    \begin{NoHyper}
+}

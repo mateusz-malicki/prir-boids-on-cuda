@@ -1,0 +1,41 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{dokument-meta}
+
+\RequirePackage{xparse}
+\RequirePackage{longtable}
+\RequirePackage{booktabs}
+
+
+\NewDocumentCommand {\GivenTytul} { } {Tytuł}
+\NewDocumentCommand {\GivenPrzedmiot} { } {Przedmiot}
+\NewDocumentCommand {\GivenData} { } {2013-01-01}
+\NewDocumentCommand {\GivenWersja} { } {1.0.0}
+\NewDocumentCommand {\GivenAutorzy} { } {TC}
+\NewDocumentCommand {\Tytul} { m } {%
+    \RenewDocumentCommand {\GivenTytul} { } {#1}
+}
+\NewDocumentCommand {\Przedmiot} { m } {%
+    \RenewDocumentCommand {\GivenPrzedmiot} { } {#1}
+}
+\NewDocumentCommand {\Data} { m } {%
+    \RenewDocumentCommand {\GivenData} { } {#1}
+}
+\NewDocumentCommand {\Wersja} { m } {%
+    \RenewDocumentCommand {\GivenWersja} { } {#1}
+}
+\NewDocumentCommand {\Autorzy} { m } {%
+    \RenewDocumentCommand {\GivenAutorzy} { } {#1}
+}
+
+\NewDocumentCommand {\MakeDokumentMeta} { } {%
+\begin{longtable}{@{} p{0.10\textwidth} @{\hspace{0.05\textwidth}} p{0.85\textwidth} @{}}
+    \toprule
+    \multicolumn{2}{@{} c @{}}{\large\bfseries\GivenTytul} \\
+    \multicolumn{2}{@{} c @{}}{\large\GivenPrzedmiot } \\
+    \midrule[0.5pt]
+    \textbf{Data}    & \GivenData \\
+    \textbf{Wersja}  & \GivenWersja \\
+    \textbf{Autorzy} & \GivenAutorzy \\
+    \bottomrule
+\end{longtable}
+}

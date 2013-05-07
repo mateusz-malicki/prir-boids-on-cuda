@@ -1,0 +1,40 @@
+$source = 'dokument.tex'
+$output = $source.sub('.tex', '.pdf')
+$published_output = "../#{File.basename(Dir.pwd)}.pdf"
+$dependencies = [
+  Dir.glob('**/*.tex'),
+  Dir.glob('./*.sty'),
+  Dir.glob('./*.cls'),
+  Dir.glob('*/**/*.pdf')
+].flatten
+$byproducts = %w{*.aux *.log *.out *.synctex.gz *.toc}
+
+$lc = 'xelatex'
+$lf = '-file-line-error -interaction=nonstopmode -synctex=yes-please'
+
+file $output => [$source, *$dependencies] do |t|
+  2.times { sh "#{$lc} #{$lf} #{t.prerequisites[0]}" }
+end
+
+task :default => :build
+
+task :build => $output
+
+task :show => $output do
+  os = case `uname`.strip when 'Darwin' then :mac else :linux end
+  case os
+  when :mac
+    sh "open -a Skim #{$output}"
+  else
+    sh "xpdf #{$output} &"
+  end
+end
+
+task :publish => $output do
+  sh "cp #{$output} #{$published_output}"
+end
+
+task :clean do
+  $byproducts.each { |file| sh "rm -f #{file}" }
+  sh "rm -f #{$output}"
+end
