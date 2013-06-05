@@ -14,7 +14,7 @@ using namespace std;
 class Point2D
 {
 private:
-  friend class boost::serialization::access;  
+  friend class boost::serialization::access;
   template<class Archive>
   void serialize(Archive & ar, const unsigned int version);
 

@@ -1,5 +1,5 @@
 #include "Structures.h"
-
+  template<class Archive>
   void Point2D::serialize(Archive & ar, const unsigned int version)
   {
     ar & x;
@@ -12,6 +12,7 @@
     y = b;
   }
 
+  template<class Archive>
   void Frame::serialize(Archive & ar, const unsigned int version)
   {
     ar & pos;

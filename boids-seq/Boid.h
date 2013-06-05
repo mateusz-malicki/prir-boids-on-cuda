@@ -1,13 +1,15 @@
 #ifndef BOID_H
 #define BOID_H
 
-#include "ser_struct.h"
+#include "Structures.h"
 
 #define RANGE 32;
 
 class Boid{
   Point2D position;
-  Boid(int, int);
+
+  public:
+    Boid(int, int);
 };
 
 #endif
