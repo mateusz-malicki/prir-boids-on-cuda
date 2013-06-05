@@ -16,22 +16,13 @@ class Point2D
 private:
   friend class boost::serialization::access;  
   template<class Archive>
-  void serialize(Archive & ar, const unsigned int version)
-  {
-    ar & x;
-    ar & y;
-  }
-
+  void serialize(Archive & ar, const unsigned int version);
 
 public:
   int x;
   int y;
   Point2D(){};
-  Point2D(int a, int b)
-  {
-    x = a;
-    y = b;
-  };
+  Point2D(int a, int b);
 };
 
 class Frame
@@ -39,21 +30,11 @@ class Frame
 private:
   friend class boost::serialization::access;  
   template<class Archive>
-  void serialize(Archive & ar, const unsigned int version)
-  {
-    ar & pos;
-  }
+  void serialize(Archive & ar, const unsigned int version);
 
   list<Point2D>pos;
 
 public:
   Frame(){};
-  Frame(int len)
-  {
-    for(int i = 0; i < len; i++)
-    {
-      Point2D point(i, len-i-1);
-      pos.push_back(point);
-    }
-  };
+  Frame(int len);
 };
