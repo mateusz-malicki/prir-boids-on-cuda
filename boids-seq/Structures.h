@@ -1,13 +1,15 @@
+#ifndef STRUCTURES_H
+#define STRUCTURES_H
+
 #include <iomanip>
 #include <iostream>
 #include <fstream>
 #include <string>
 #include <list>
 
-
-#include <boost/archive/text_oarchive.hpp>
-#include <boost/archive/text_iarchive.hpp>
 #include <boost/serialization/list.hpp>
+#include <boost/archive/xml_oarchive.hpp>
+#include <boost/archive/xml_iarchive.hpp>
 
 using namespace std;
 
@@ -22,7 +24,7 @@ public:
   int x;
   int y;
   Point2D(){};
-  Point2D(int a, int b);
+  Point2D(int , int );
 };
 
 class Frame
@@ -32,9 +34,10 @@ private:
   template<class Archive>
   void serialize(Archive & ar, const unsigned int version);
 
-  list<Point2D>pos;
 
 public:
+  list<Point2D>pos;
   Frame(){};
-  Frame(int len);
+  void add_point(Point2D);
 };
+#endif

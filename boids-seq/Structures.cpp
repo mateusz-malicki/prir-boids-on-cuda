@@ -2,8 +2,8 @@
   template<class Archive>
   void Point2D::serialize(Archive & ar, const unsigned int version)
   {
-    ar & x;
-    ar & y;
+    ar & BOOST_SERIALIZATION_NVP(x)
+       & BOOST_SERIALIZATION_NVP(y);
   }
 
   Point2D::Point2D(int a, int b)
@@ -15,14 +15,10 @@
   template<class Archive>
   void Frame::serialize(Archive & ar, const unsigned int version)
   {
-    ar & pos;
+    ar & BOOST_SERIALIZATION_NVP(pos);
   }
 
-  Frame::Frame(int len)
+  void Frame::add_point(Point2D point)
   {
-    for(int i = 0; i < len; i++)
-    {
-      Point2D point(i, len-i-1);
       pos.push_back(point);
-    }
   }
