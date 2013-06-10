@@ -14,7 +14,7 @@ const int xRes = 800;
 const int yRes = 800;
 
 
-void drawTriangle(Boid boid, ALLEGRO_COLOR color, float scale, bool range)
+void drawTriangle(Boid boid, ALLEGRO_COLOR color, float scale, bool debug)
 {
   float xc = boid.position.x*scale;
   float yc = boid.position.y*scale;
@@ -41,11 +41,26 @@ void drawTriangle(Boid boid, ALLEGRO_COLOR color, float scale, bool range)
   int x3 = midx+vyNorm*len*0.5;
   int y3 = midy-vxNorm*len*0.5;
 
-           al_draw_filled_triangle(x1,y1, x2,y2, x3, y3, color);
+  al_draw_filled_triangle(x1,y1, x2,y2, x3, y3, color);
 
   ALLEGRO_COLOR blue_color = al_map_rgb(22,22,184);
-  if(range) al_draw_circle(xc,yc, 32, blue_color, 2);
-  
+  if(debug)
+  { 
+    ALLEGRO_COLOR blue_color = al_map_rgb(22,22,184);
+    ALLEGRO_COLOR purple_color = al_map_rgb(184,22,184);
+    ALLEGRO_COLOR white_color = al_map_rgb(184,184,184);
+
+    int alignX = xc+boid.alignForce.x*scale*0.2;
+    int alignY = yc+boid.alignForce.y*scale*0.2;
+    int separateX = xc+boid.separateForce.x*scale*0.2;
+    int separateY = yc+boid.separateForce.y*scale*0.2;
+    int cohesionX = xc+boid.cohesionForce.x*scale*0.2;
+    int cohesionY = yc+boid.cohesionForce.y*scale*0.2;
+    al_draw_line(alignX, alignY, xc, yc, blue_color, 2);
+    al_draw_line(cohesionX, cohesionY, xc, yc, purple_color, 2);
+    al_draw_line(separateX, separateY, xc, yc, white_color, 2);
+    //al_draw_circle(xc,yc, 32, blue_color, 2);
+  }
 }
 
 int initAllegro(ALLEGRO_DISPLAY* display, ALLEGRO_EVENT_QUEUE* event_queue, ALLEGRO_TIMER* timer)
@@ -207,7 +222,7 @@ int main(int argc, char** argv)
            if(debug && i==debugIndex)
            { 
              color = al_map_rgb(22,184,22);
-             drawTriangle(frames[index].boids[i], color, scale, false);
+             drawTriangle(frames[index].boids[i], color, scale, true);
            }
            else if(debug)
            {
@@ -217,7 +232,7 @@ int main(int argc, char** argv)
                if(frames[index].boids[debugIndex].neighbours[j] == i)
                {
                  color = al_map_rgb(184,184,22);
-                 drawTriangle(frames[index].boids[i], color, scale, false);
+                 drawTriangle(frames[index].boids[i], color, scale, true);
                  found = true;
                  break;
                }
